@@ -1,7 +1,13 @@
 import mongoose from 'mongoose';
 import validator from 'validator';
+import shortid from "shortid";
 
 const reservationSchema = new mongoose.Schema({
+    resId: {
+        type: String,
+        default: shortid.generate,
+        unique: true
+    },
     firstName: {
         type: String,
         required: true,

@@ -1,6 +1,12 @@
 import mongoose from 'mongoose';
+import shortid from "shortid";
 
 const menuSchema = new mongoose.Schema({
+    menuId: {
+        type: String,
+        default: shortid.generate,
+        unique: true
+    },
     category: {
         type: String,
         required: true,
@@ -32,6 +38,10 @@ const menuSchema = new mongoose.Schema({
         type: Number,
         required: true,
     },
+    imageUrl: {
+        type: String,
+        required: false,
+    }
 });
 
 const Menu = mongoose.model("Menu", menuSchema);

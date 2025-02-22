@@ -21,7 +21,8 @@
 
       res.status(200).json({
           success: true,
-          message: "Reservation sent successfully."
+          message: "Reservation sent successfully.",
+          resId: Reservation.resId
       });
 
   } catch (error) {

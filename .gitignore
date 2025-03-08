@@ -1,0 +1,91 @@
+# Node modules
+node_modules/
+
+# Vite build output
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+*.log
+
+# Environment variables
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Editor & IDE settings
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+*.out
+*.log
+
+# Vite cache
+.vite/
+
+# Dependency directory
+/.pnp
+.pnp.js
+
+# Miscellaneous
+*.lock
+*.bak
+*.tmp
+*.old
+*.orig
+
+# MongoDB data
+*.mongo
+
+# Debugging files
+*.pid
+*.seed
+
+# Coverage reports
+coverage/
+
+# Optional npm cache directory
+.npm/
+
+# Optional eslint cache
+.eslintcache
+
+# Optional jest cache
+/jest-cache/
+jest.config.js
+
+# Optional TypeScript cache
+*.tsbuildinfo
+
+# VSCode workspace settings
+.vscode/
+
+# Next.js build
+.next/
+
+# Yarn Plug'n'Play
+.pnp.*
+
+# IDEs and editors
+.idea/
+*.iml
+*.sublime-*
+
+# Optional: Ignore frontend-specific builds
+/frontend/dist/

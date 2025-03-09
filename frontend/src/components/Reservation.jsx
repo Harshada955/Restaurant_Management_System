@@ -1,5 +1,5 @@
 import { HiOutlineArrowNarrowRight } from "react-icons/hi";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { sendReservation } from "../services/reservation-service";
@@ -11,24 +11,47 @@ const Reservation = () => {
   const [date, setDate] = useState("");
   const [time, setTime] = useState("");
   const [phone, setPhone] = useState(0);
+  const [isValid, setIsValid] = useState(false);
   const navigate = useNavigate();
 
-  const handleReservation = useCallback(async (e) => {
-    e.preventDefault();
-    try {
-      const response = await sendReservation({ firstName, lastName, email, phone, date, time });
-      toast.success(response.message);
-      setFirstName("");
-      setLastName("");
-      setPhone(0);
-      setEmail("");
-      setTime("");
-      setDate("");
-      navigate("/success");
-    } catch (error) {
-      toast.error(error.response.data.message);
+  const handleReservation = useCallback(
+    async (e) => {
+      e.preventDefault();
+      try {
+        if (!isValid) {
+          toast.error("Please fill full reservation form!");
+          return;
+        }
+        const response = await sendReservation({
+          firstName,
+          lastName,
+          email,
+          phone,
+          date,
+          time,
+        });
+        toast.success(response.message);
+        setFirstName("");
+        setLastName("");
+        setPhone(0);
+        setEmail("");
+        setTime("");
+        setDate("");
+        navigate("/success");
+      } catch (error) {
+        toast.error(error.message);
+      }
+    },
+    [date, email, firstName, isValid, lastName, navigate, phone, time]
+  );
+
+  useEffect(() => {
+    if (firstName && lastName && email && phone && date && time) {
+      setIsValid(true);
+    } else {
+      setIsValid(false);
     }
-  }, [date, email, firstName, lastName, navigate, phone, time]);
+  }, [firstName, lastName, email, phone, date, time]);
 
   return (
     <section className="reservation" id="reservation">

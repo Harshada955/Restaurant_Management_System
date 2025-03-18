@@ -1,26 +1,33 @@
 import { configureStore } from "@reduxjs/toolkit";
 import commonReducer from "../reducer/commonReducer";
+import orderReducer from "../reducer/orderReducer";
 import { persistStore, persistReducer } from "redux-persist";
-import storage from "redux-persist/lib/storage"; // Uses localStorage
+import storage from "redux-persist/lib/storage";
 import { combineReducers } from "redux";
 
 const persistConfig = {
-  key: "root", // The key under which state will be stored in localStorage
+  key: "root",
   storage,
 };
 
-// Combine reducers if you have multiple reducers
 const rootReducer = combineReducers({
   common: commonReducer,
+  order: orderReducer,
 });
 
-// Create a persisted reducer
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const store = configureStore({
   reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: ["persist/PERSIST", "persist/REHYDRATE"],
+      },
+    }),
+  devTools: true,
 });
 
-export const persistor = persistStore(store); // Create a persistor instance
+export const persistor = persistStore(store);
 
 export default store;

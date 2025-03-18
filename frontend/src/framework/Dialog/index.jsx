@@ -35,6 +35,12 @@ const DialogBox = (props) => {
         keepMounted={true}
         onClose={handleClose}
         aria-describedby="alert-dialog-slide-description"
+        BackdropProps={{
+          sx: {
+            backdropFilter: "blur(10px)",
+            backgroundColor: "rgba(0, 0, 0, 0.3)",
+          },
+        }}
       >
         <DialogTitle>{dialogTitle}</DialogTitle>
         <DialogContent>

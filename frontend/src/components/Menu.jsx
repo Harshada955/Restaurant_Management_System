@@ -2,15 +2,28 @@ import { data } from "../restApi.json";
 import PropTypes from "prop-types";
 import classes from "./Menu.module.css";
 import icons from "../assets/icons";
-import Footer from "./Footer";
+import { useDispatch } from "react-redux";
+import { addOrderItem } from "../redux/reducer/orderReducer";
+import OrderSummary from "../Pages/OrderMenu/OrderSummary";
+
 const Menu = (props) => {
-  const { allMenus = [], isOurMenu = false } = props;
+  const { allMenus = [], isOurMenu = false, isOrderMenu = false } = props;
   const { vegIcon, nonVegIcon } = icons;
+  const dispatch = useDispatch();
   const categories = [...new Set(allMenus.map((menu) => menu.category))];
+
   return (
     <>
-      <section className={`menu ${isOurMenu && classes["our_menu"]}`} id="menu">
-        <div className="container">
+      <section
+        className={`menu ${isOurMenu ? classes["our_menu"] : ""}`}
+        id="menu"
+        style={isOurMenu ? { padding: "20px" } : {}}
+      >
+        <div
+          className={
+            !isOrderMenu ? "container" : `${classes["menu_container"]}`
+          }
+        >
           {!isOurMenu ? (
             <>
               <div className="heading_section">
@@ -57,6 +70,16 @@ const Menu = (props) => {
                           <div
                             className={classes["item_card"]}
                             key={menu.menuId}
+                            onClick={() => {
+                              if (isOrderMenu) {
+                                dispatch(addOrderItem(menu));
+                              }
+                            }}
+                            style={
+                              isOrderMenu
+                                ? { cursor: "pointer" }
+                                : { cursor: "default" }
+                            }
                           >
                             <div className={`${classes["item_type_name"]}`}>
                               {menu.subCategory === "Veg" && (
@@ -95,10 +118,8 @@ const Menu = (props) => {
             </div>
           )}
         </div>
+        {isOrderMenu && <OrderSummary />}
       </section>
-      {isOurMenu && (
-        <Footer/>
-      )}
     </>
   );
 };
@@ -108,4 +129,5 @@ export default Menu;
 Menu.propTypes = {
   allMenus: PropTypes.arrayOf(PropTypes.object),
   isOurMenu: PropTypes.bool,
+  isOrderMenu: PropTypes.bool,
 };

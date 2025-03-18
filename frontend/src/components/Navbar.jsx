@@ -10,7 +10,7 @@ const Navbar = (props) => {
   const [show, setShow] = useState(false);
   return (
     <>
-      <nav>
+      <nav className="navbar">
         <div className="logo">HOTEL DIAMOND SHINE</div>
         <div className={show ? "navLinks showmenu" : "navLinks"}>
           {!isMunuPage ? <div className="links">
